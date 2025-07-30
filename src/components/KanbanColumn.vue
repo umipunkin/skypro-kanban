@@ -1,11 +1,10 @@
 <script setup>
-import TaskCard from '@/components/TaskCard.vue'
+import TaskCard from '@/components/TaskCard.vue';
 
 defineProps({
-  title: String
-})
-
-
+  title: String,
+  tasks: Array,
+});
 </script>
 
 <template>
@@ -14,11 +13,11 @@ defineProps({
       <p>{{ title }}</p>
     </div>
     <div class="cards">
-      <TaskCard v-for="i in 3" :key="i" />
+      <TaskCard 
+        v-for="task in tasks" 
+        :key="task.id"
+        :task="task"
+      />
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-
-</style>
