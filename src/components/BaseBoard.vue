@@ -13,6 +13,7 @@
   <script>
   import TaskColumn from './TaskColumn.vue'
   
+  
   export default {
     components: {
       TaskColumn
