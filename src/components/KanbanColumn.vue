@@ -31,7 +31,6 @@ defineProps({
 
 <style scoped>
 .column {
-  background: #f8f9fa;
   border-radius: 8px;
   padding: 12px;
   height: fit-content;

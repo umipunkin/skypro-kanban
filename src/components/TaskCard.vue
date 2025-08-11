@@ -2,14 +2,19 @@
 import CategoryTag from '@/components/CategoryTag.vue';
 import TaskMenuButton from '@/components/TaskMenuButton.vue';
 import TaskDate from '@/components/TaskDate.vue';
+import { useRouter } from 'vue-router';
 
-defineProps({
+const props = defineProps({
   task: Object,
 });
+
+const router = useRouter()
+
+const onCardClick = () => router.push(`/tasks/${props.task.id}/edit`)
 </script>
 
 <template>
-  <div class="cards__item">
+  <div class="cards__item" @click="onCardClick">
     <div class="cards__card card">
       <div class="card__group">
         <CategoryTag :category="task.topic" />
