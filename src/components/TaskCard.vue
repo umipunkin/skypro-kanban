@@ -21,9 +21,9 @@ const onCardClick = () => router.push(`/tasks/${props.task.id}/edit`)
         <TaskMenuButton />
       </div>
       <div class="card__content">
-        <a href="#popBrowse" class="card__link">
-          <h3 class="card__title">{{ task.title }}</h3>
-        </a>
+        <router-link class="card__link" is="a" to="/">
+            <h3 class="card__title">{{ task.title }}</h3>
+          </router-link>
         <TaskDate :date="task.date" />
       </div>
     </div>

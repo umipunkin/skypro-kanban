@@ -6,7 +6,7 @@
 					<div class="pop-browse__block">
 						<div class="pop-browse__content">
 							<div class="pop-browse__top-block">
-								<h3 class="pop-browse__ttl">Название задачи</h3>
+								<h3 class="pop-browse__ttl">Просмотр задачи #{{ taskId }}</h3>
 								<div class="categories__theme theme-top _orange _active-category">
 									<p class="_orange">Web Design</p>
 								</div>
@@ -142,5 +142,15 @@
   </template>
   
   <script setup>
+  import { ref, onMounted } from 'vue'
+  import { useRoute } from 'vue-router'
   import AppHeader from '@/components/AppHeader.vue'
+  
+  const route = useRoute()
+  const taskId = ref(null)
+  
+  onMounted(() => {
+	taskId.value = route.params.id
+	console.log('Просмотр задачи с ID:', taskId.value)
+  })
   </script>
