@@ -80,9 +80,9 @@ export const tasks = [
   ];
 
   export const statuses = [
-    { id: "no-status", title: "Без статуса", color: "#94A6BE" },
-    { id: "todo", title: "Нужно сделать", color: "#565EEF" },
-    { id: "in-progress", title: "В работе", color: "#FF6D00" },
-    { id: "testing", title: "Тестирование", color: "#9A48F1" },
-    { id: "done", title: "Готово", color: "#06B16E" }
-  ];
+  { id: "no-status", title: "Без статуса", color: "#94A6BE" },
+  { id: "todo", title: "Нужно сделать", color: "#565EEF" },
+  { id: "in-progress", title: "В работе", color: "#FF6D00" },
+  { id: "testing", title: "Тестирование", color: "#9A48F1" },
+  { id: "done", title: "Готово", color: "#06B16E" }
+];

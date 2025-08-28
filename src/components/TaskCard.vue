@@ -2,23 +2,28 @@
 import CategoryTag from '@/components/CategoryTag.vue';
 import TaskMenuButton from '@/components/TaskMenuButton.vue';
 import TaskDate from '@/components/TaskDate.vue';
+import { useRouter } from 'vue-router';
 
-defineProps({
+const props = defineProps({
   task: Object,
 });
+
+const router = useRouter()
+
+const onCardClick = () => router.push(`/tasks/${props.task.id}/edit`)
 </script>
 
 <template>
-  <div class="cards__item">
+  <div class="cards__item" @click="onCardClick">
     <div class="cards__card card">
       <div class="card__group">
         <CategoryTag :category="task.topic" />
         <TaskMenuButton />
       </div>
       <div class="card__content">
-        <a href="#popBrowse" class="card__link">
-          <h3 class="card__title">{{ task.title }}</h3>
-        </a>
+        <router-link class="card__link" is="a" to="/">
+            <h3 class="card__title">{{ task.title }}</h3>
+          </router-link>
         <TaskDate :date="task.date" />
       </div>
     </div>
