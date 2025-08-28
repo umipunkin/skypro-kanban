@@ -1,6 +1,22 @@
 <script setup>
+import { onBeforeMount } from 'vue';
 import {  RouterView } from 'vue-router'
+import { getUser, login } from '@/utils/auth'
+import { signIn } from './assets/services/api';
 
+onBeforeMount(async () => {
+  const user = getUser()
+  if(!user) {
+    return
+  }
+
+  login(user.token, user)
+  try {
+    await signIn(user)
+  } catch (error) {
+    throw new Error(error.response.user.error);
+  }
+})
 </script>
 
 <template>

@@ -1,24 +1,18 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
-import KanbanColumn from '@/components/KanbanColumn.vue';
-import { tasks } from '@/components/mocks/tasks';
+import { ref, computed, onMounted, defineProps } from 'vue'
+import KanbanColumn from '@/components/KanbanColumn.vue'
+
+const props = defineProps(['tasks', 'isLoading'])
 
 const columns = [
-  { title: 'Без статуса', id: 'no-status' },
-  { title: 'Нужно сделать', id: 'todo' },
-  { title: 'В работе', id: 'in-progress' },
-  { title: 'Тестирование', id: 'testing' },
-  { title: 'Готово', id: 'done' }
-];
+  { title: 'Без статуса', id: 'Без статуса' },
+  { title: 'Нужно сделать', id: 'Нужно Сделать' },
+  { title: 'В работе', id: 'В работе' },
+  { title: 'Тестирование', id: 'Тестирование' },
+  { title: 'Готово', id: 'Готово' },
+]
 
-const isLoading = ref(true);
-const hasTasks = computed(() => tasks.length > 0);
-
-onMounted(() => {
-  setTimeout(() => {
-    isLoading.value = false;
-  }, 1500);
-});
+const hasTasks = computed(() => props.tasks.length > 0)
 </script>
 
 <template>
@@ -31,16 +25,25 @@ onMounted(() => {
         </div>
         <div v-else class="main__content">
           <template v-if="hasTasks">
-            <KanbanColumn 
-              v-for="column in columns" 
+            <KanbanColumn
+              v-for="column in columns"
               :key="column.id"
               :title="column.title"
-              :tasks="tasks.filter(task => task.status === column.id)"
+              :tasks="tasks.filter((task) => task.status === column.id)"
             />
           </template>
           <div v-else class="no-tasks">
-            <svg width="70" height="70" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M11 17H13V11H11V17ZM12 9C12.2833 9 12.5208 8.90417 12.7125 8.7125C12.9042 8.52083 13 8.28333 13 8C13 7.71667 12.9042 7.47917 12.7125 7.2875C12.5208 7.09583 12.2833 7 12 7C11.7167 7 11.4792 7.09583 11.2875 7.2875C11.0958 7.47917 11 7.71667 11 8C11 8.28333 11.0958 8.52083 11.2875 8.7125C11.4792 8.90417 11.7167 9 12 9ZM12 22C10.6167 22 9.31667 21.7375 8.1 21.2125C6.88333 20.6875 5.825 19.975 4.925 19.075C4.025 18.175 3.3125 17.1167 2.7875 15.9C2.2625 14.6833 2 13.3833 2 12C2 10.6167 2.2625 9.31667 2.7875 8.1C3.3125 6.88333 4.025 5.825 4.925 4.925C5.825 4.025 6.88333 3.3125 8.1 2.7875C9.31667 2.2625 10.6167 2 12 2C13.3833 2 14.6833 2.2625 15.9 2.7875C17.1167 3.3125 18.175 4.025 19.075 4.925C19.975 5.825 20.6875 6.88333 21.2125 8.1C21.7375 9.31667 22 10.6167 22 12C22 13.3833 21.7375 14.6833 21.2125 15.9C20.6875 17.1167 19.975 18.175 19.075 19.075C18.175 19.975 17.1167 20.6875 15.9 21.2125C14.6833 21.7375 13.3833 22 12 22Z" fill="#94A6BE"/>
+            <svg
+              width="70"
+              height="70"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M11 17H13V11H11V17ZM12 9C12.2833 9 12.5208 8.90417 12.7125 8.7125C12.9042 8.52083 13 8.28333 13 8C13 7.71667 12.9042 7.47917 12.7125 7.2875C12.5208 7.09583 12.2833 7 12 7C11.7167 7 11.4792 7.09583 11.2875 7.2875C11.0958 7.47917 11 7.71667 11 8C11 8.28333 11.0958 8.52083 11.2875 8.7125C11.4792 8.90417 11.7167 9 12 9ZM12 22C10.6167 22 9.31667 21.7375 8.1 21.2125C6.88333 20.6875 5.825 19.975 4.925 19.075C4.025 18.175 3.3125 17.1167 2.7875 15.9C2.2625 14.6833 2 13.3833 2 12C2 10.6167 2.2625 9.31667 2.7875 8.1C3.3125 6.88333 4.025 5.825 4.925 4.925C5.825 4.025 6.88333 3.3125 8.1 2.7875C9.31667 2.2625 10.6167 2 12 2C13.3833 2 14.6833 2.2625 15.9 2.7875C17.1167 3.3125 18.175 4.025 19.075 4.925C19.975 5.825 20.6875 6.88333 21.2125 8.1C21.7375 9.31667 22 10.6167 22 12C22 13.3833 21.7375 14.6833 21.2125 15.9C20.6875 17.1167 19.975 18.175 19.075 19.075C18.175 19.975 17.1167 20.6875 15.9 21.2125C14.6833 21.7375 13.3833 22 12 22Z"
+                fill="#94A6BE"
+              />
             </svg>
             <p>Задач нет</p>
             <button class="add-task-btn _hover01">Добавить задачу</button>
@@ -65,7 +68,7 @@ onMounted(() => {
   width: 40px;
   height: 40px;
   border: 4px solid #f3f3f3;
-  border-top: 4px solid #565EEF;
+  border-top: 4px solid #565eef;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 15px;
@@ -74,7 +77,7 @@ onMounted(() => {
 .loading-text {
   text-align: center;
   font-size: 18px;
-  color: #94A6BE;
+  color: #94a6be;
 }
 
 .no-tasks {
@@ -89,12 +92,12 @@ onMounted(() => {
 
 .no-tasks p {
   font-size: 18px;
-  color: #94A6BE;
+  color: #94a6be;
   margin: 20px 0;
 }
 
 .add-task-btn {
-  background-color: #565EEF;
+  background-color: #565eef;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -104,7 +107,11 @@ onMounted(() => {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>
