@@ -26,6 +26,8 @@
           >
           <span class="error" v-if="errors.password">{{ errors.password }}</span>
         </div>
+        
+        <span class="error" v-if="errors.general">{{ errors.general }}</span>
 
         <button type="submit" class="auth-button _hover01" :disabled="isSubmitting">
           {{ isSubmitting ? 'Вход...' : 'Войти' }}
@@ -43,6 +45,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { login } from '@/utils/auth'
+import { signIn } from '@/assets/services/api'
 
 const router = useRouter()
 const email = ref('')
@@ -76,12 +79,21 @@ const validate = () => {
 const handleSubmit = async () => {
   if (!validate()) return
 
+  errors.value = {}
+
   isSubmitting.value = true
 
   try {
-    const mockToken = 'mock-auth-token'
-    login(mockToken)
+    const userData = {
+      login: email.value,
+      password: password.value
+    }
+    const response = await signIn(userData)
+
+    login(response.token, response)
     
+    console.log(response)
+
     router.push('/')
   } catch (error) {
     errors.value.general = error.message || 'Ошибка входа'
@@ -139,7 +151,7 @@ const handleSubmit = async () => {
 }
 
 .error {
-  color: #FF6D00;
+  color: #F84D4D;
   font-size: 12px;
   margin-top: 5px;
   display: block;

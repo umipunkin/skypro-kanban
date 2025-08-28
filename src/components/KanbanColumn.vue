@@ -48,6 +48,7 @@ defineProps({
 .column__title {
   padding: 0 10px;
   margin: 15px 0;
+  color: #94A6BE;
 }
 .column__title p {
   color: #94A6BE;

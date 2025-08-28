@@ -39,6 +39,9 @@
           <span class="error" v-if="errors.password">{{ errors.password }}</span>
         </div>
 
+        <span class="error" v-if="errors.general">{{ errors.general }}</span>
+
+
         <button type="submit" class="auth-button _hover01" :disabled="isSubmitting">
           {{ isSubmitting ? 'Регистрация...' : 'Зарегистрироваться' }}
         </button>
@@ -55,6 +58,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { login } from '@/utils/auth'
+import { signUp } from '@/assets/services/api'
 
 const router = useRouter()
 const name = ref('')
@@ -94,15 +98,21 @@ const validate = () => {
 const handleSubmit = async () => {
   if (!validate()) return
 
+  errors.value = {}
+
   isSubmitting.value = true
 
   try {
-    const mockToken = 'mock-auth-token'
     const userData = {
       name: name.value,
-      email: email.value
+      login: email.value,
+      password: password.value
     }
-    login(mockToken, userData)
+    // login(mockToken, userData)
+
+    const res = await signUp(userData)
+
+    login(res.token, res)
     
     router.push('/')
   } catch (error) {
@@ -111,6 +121,8 @@ const handleSubmit = async () => {
     isSubmitting.value = false
   }
 }
+
+
 </script>
 
 <style scoped>
