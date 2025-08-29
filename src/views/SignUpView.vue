@@ -11,7 +11,7 @@
             class="form-input"
             required
             placeholder="Имя"
-          >
+          />
           <span class="error" v-if="errors.name">{{ errors.name }}</span>
         </div>
 
@@ -23,7 +23,7 @@
             class="form-input"
             required
             placeholder="Эл. почта"
-          >
+          />
           <span class="error" v-if="errors.email">{{ errors.email }}</span>
         </div>
 
@@ -35,12 +35,11 @@
             class="form-input"
             required
             placeholder="Пароль"
-          >
+          />
           <span class="error" v-if="errors.password">{{ errors.password }}</span>
         </div>
 
         <span class="error" v-if="errors.general">{{ errors.general }}</span>
-
 
         <button type="submit" class="auth-button _hover01" :disabled="isSubmitting">
           {{ isSubmitting ? 'Регистрация...' : 'Зарегистрироваться' }}
@@ -58,7 +57,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { login } from '@/utils/auth'
-import { signUp } from '@/assets/services/api'
+import { signUp } from '@/services/api'
 
 const router = useRouter()
 const name = ref('')
@@ -106,14 +105,14 @@ const handleSubmit = async () => {
     const userData = {
       name: name.value,
       login: email.value,
-      password: password.value
+      password: password.value,
     }
     // login(mockToken, userData)
 
     const res = await signUp(userData)
 
     login(res.token, res)
-    
+
     router.push('/')
   } catch (error) {
     errors.value.general = error.message || 'Ошибка регистрации'
@@ -121,8 +120,6 @@ const handleSubmit = async () => {
     isSubmitting.value = false
   }
 }
-
-
 </script>
 
 <style scoped>
@@ -131,7 +128,7 @@ const handleSubmit = async () => {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #EAEEF6;
+  background-color: #eaeef6;
   padding: 20px;
 }
 
@@ -165,19 +162,19 @@ const handleSubmit = async () => {
 .form-input {
   width: 100%;
   padding: 12px 15px;
-  border: 1px solid #D4DBE5;
+  border: 1px solid #d4dbe5;
   border-radius: 8px;
   font-size: 14px;
   transition: border-color 0.3s;
 }
 
 .form-input:focus {
-  border-color:  #D4DBE5;
+  border-color: #d4dbe5;
   outline: none;
 }
 
 .error {
-  color: #FF6D00;
+  color: #ff6d00;
   font-size: 12px;
   margin-top: 5px;
   display: block;
@@ -186,7 +183,7 @@ const handleSubmit = async () => {
 .auth-button {
   width: 100%;
   padding: 12px;
-  background-color: #565EEF;
+  background-color: #565eef;
   color: white;
   border: none;
   border-radius: 4px;
@@ -197,19 +194,19 @@ const handleSubmit = async () => {
 }
 
 .auth-button:disabled {
-  background-color: #94A6BE;
+  background-color: #94a6be;
   cursor: not-allowed;
 }
 
 .auth-link {
   text-align: center;
   margin-top: 20px;
-  color: #94A6BE;
+  color: #94a6be;
   font-size: 14px;
 }
 
 .auth-link a {
-  color: #94A6BE;
+  color: #94a6be;
   text-decoration: underline;
 }
 

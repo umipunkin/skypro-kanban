@@ -1,7 +1,7 @@
 <script setup>
 import AppHeader from '@/components/AppHeader.vue'
 import KanbanBoard from '@/components/KanbanBoard.vue'
-import { fetchTasks } from '@/assets/services/api'
+import { fetchTasks } from '@/services/api'
 import { onMounted, ref } from 'vue'
 
 const tasks = ref([])
