@@ -149,7 +149,12 @@
                   <a href="#">Удалить задачу</a>
                 </button>
               </div>
-              <button class="btn-edit__close _btn-bg _hover01" @click="$router.push({name: 'home'})">Закрыть</button>
+              <button
+                class="btn-edit__close _btn-bg _hover01"
+                @click="$router.push({ name: 'home' })"
+              >
+                Закрыть
+              </button>
             </div>
             <div class="pop-browse__btn-edit _hide">
               <div class="btn-group">
@@ -159,7 +164,12 @@
                   <a href="#">Удалить задачу</a>
                 </button>
               </div>
-              <button class="btn-edit__close _btn-bg _hover01" @click="$router.push({name: 'home'})">Закрыть</button>
+              <button
+                class="btn-edit__close _btn-bg _hover01"
+                @click="$router.push({ name: 'home' })"
+              >
+                Закрыть
+              </button>
             </div>
           </div>
         </div>
@@ -169,16 +179,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
 
 const route = useRoute()
-const taskId = ref(null)
+const taskId = route.params.id
 
 onMounted(() => {
-  taskId.value = route.params.id
-  console.log('Редактирование задачи с ID:', taskId.value)
-  // Здесь можно загрузить данные задачи для редактирования
+  console.log('Редактирование задачи с ID:', taskId)
 })
 </script>

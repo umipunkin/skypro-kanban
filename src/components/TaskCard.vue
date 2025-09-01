@@ -37,6 +37,7 @@ const onCardClick = () => router.push(`/tasks/${props.task.id}/edit`)
   animation-name: card-animation;
   animation-duration: 500ms;
   animation-timing-function: linear;
+  min-width: 220px;
 }
 
 .cards__card {
