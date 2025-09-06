@@ -93,8 +93,6 @@ const handleSubmit = async () => {
 
     login(response.token, response)
 
-    console.log(response)
-
     router.push('/')
   } catch (error) {
     errors.value.general = error.message || 'Ошибка входа'

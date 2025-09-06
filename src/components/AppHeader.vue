@@ -7,8 +7,6 @@ const user = ref(null)
 onMounted(() => {
   user.value = getUser()
 })
-
-
 </script>
 
 <template>

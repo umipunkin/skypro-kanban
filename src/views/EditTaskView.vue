@@ -179,14 +179,9 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
 
 const route = useRoute()
 const taskId = route.params.id
-
-onMounted(() => {
-  console.log('Редактирование задачи с ID:', taskId)
-})
 </script>

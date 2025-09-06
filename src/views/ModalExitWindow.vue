@@ -21,11 +21,10 @@
 </template>
 
 <script setup>
-import { logout } from '@/utils/auth';
-import { useRouter } from 'vue-router';
+import { logout } from '@/utils/auth'
+import { useRouter } from 'vue-router'
 
-
-const router = useRouter();
+const router = useRouter()
 
 const handleLogout = () => {
   logout()

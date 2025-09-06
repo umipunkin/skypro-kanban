@@ -1,10 +1,10 @@
 <script setup>
-import TaskCard from '@/components/TaskCard.vue';
+import TaskCard from '@/components/TaskCard.vue'
 
 defineProps({
   title: String,
   tasks: Array,
-});
+})
 </script>
 
 <template>
@@ -14,14 +14,13 @@ defineProps({
       <span class="column__count">{{ tasks.length }}</span>
     </div>
     <div class="column__content">
-      <TaskCard 
-        v-for="task in tasks" 
-        :key="task.id"
-        :task="task"
-      />
+      <TaskCard v-for="task in tasks" :key="task.id" :task="task" />
       <div v-if="tasks.length === 0" class="column__empty">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M12 5.99L19.53 19H4.47L12 5.99ZM12 2L1 21H23L12 2ZM13 16H11V18H13V16ZM13 10H11V14H13V10Z" fill="#94A6BE"/>
+          <path
+            d="M12 5.99L19.53 19H4.47L12 5.99ZM12 2L1 21H23L12 2ZM13 16H11V18H13V16ZM13 10H11V14H13V10Z"
+            fill="#94A6BE"
+          />
         </svg>
         <p>Нет задач</p>
       </div>
@@ -48,10 +47,10 @@ defineProps({
 .column__title {
   padding: 0 10px;
   margin: 15px 0;
-  color: #94A6BE;
+  color: #94a6be;
 }
 .column__title p {
-  color: #94A6BE;
+  color: #94a6be;
   font-size: 14px;
   font-weight: 600;
   line-height: 1;
@@ -77,7 +76,7 @@ defineProps({
 .column__empty {
   padding: 20px;
   text-align: center;
-  color: #94A6BE;
+  color: #94a6be;
   font-size: 14px;
 }
 
