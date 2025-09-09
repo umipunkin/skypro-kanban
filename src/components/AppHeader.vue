@@ -1,12 +1,7 @@
 <script setup>
-import { getUser } from '@/utils/auth'
-import { ref, onMounted } from 'vue'
+import { inject } from 'vue'
 
-const user = ref(null)
-
-onMounted(() => {
-  user.value = getUser()
-})
+const user = inject('user', null)
 </script>
 
 <template>

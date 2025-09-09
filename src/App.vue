@@ -3,6 +3,7 @@ import { onBeforeMount } from 'vue'
 import { RouterView } from 'vue-router'
 import { getUser, login } from '@/utils/auth'
 import { signIn } from './services/api'
+import AppLayout from '@/AppLayout.vue'
 
 onBeforeMount(async () => {
   const user = getUser()
@@ -20,7 +21,9 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <RouterView />
+  <AppLayout>
+    <RouterView />
+  </AppLayout>
 </template>
 
 <style scoped>

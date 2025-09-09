@@ -79,6 +79,19 @@ export async function signUp({ name, login, password }) {
   }
 }
 
+export async function deleteTask(id) {
+  try {
+    const response = await axios.delete(`${API_URL}/kanban/${id}`, {
+      headers: {
+        Authorization: authHeader,
+      },
+    })
+    return response.data
+  } catch (error) {
+    throw new Error(error.response?.data?.error || error.message)
+  }
+}
+
 export function logout() {
   authHeader = ''
 }
