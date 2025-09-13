@@ -8,7 +8,7 @@
             <div class="pop-browse__top-block">
               <h3 class="pop-browse__ttl">Редактирование задачи #{{ taskId }}</h3>
               <div class="categories__theme theme-top _orange _active-category">
-                <p class="_orange">Web Design</p>
+                <p class="_orange">{{ currentTask?.topic || 'Web Design' }}</p>
               </div>
             </div>
             <div class="pop-browse__status status">
@@ -158,16 +158,21 @@
             </div>
             <div class="pop-browse__btn-edit _hide">
               <div class="btn-group">
-                <button class="btn-edit__edit _btn-bg _hover01"><a href="#">Сохранить</a></button>
-                <button class="btn-edit__edit _btn-bor _hover03"><a href="#">Отменить</a></button>
-                <button class="btn-edit__delete _btn-bor _hover03" id="btnDelete">
-                  <a href="#">Удалить задачу</a>
+                <button class="btn-edit__edit _btn-bg _hover01" @click="handleTaskSaved">
+                  Сохранить
+                </button>
+                <button class="btn-edit__edit _btn-bor _hover03" @click="handleCancelEdit">
+                  Отменить
+                </button>
+                <button
+                  class="btn-edit__delete _btn-bor _hover03"
+                  id="btnDelete"
+                  @click="handleTaskDeleted"
+                >
+                  Удалить задачу
                 </button>
               </div>
-              <button
-                class="btn-edit__close _btn-bg _hover01"
-                @click="$router.push({ name: 'home' })"
-              >
+              <button class="btn-edit__close _btn-bg _hover01" @click="handleCancelEdit">
                 Закрыть
               </button>
             </div>
@@ -179,14 +184,41 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
+import { inject } from 'vue'
+import { deleteTask } from '@/services/api'
 
 const route = useRoute()
+const router = useRouter()
 const taskId = route.params.id
 
-onMounted(() => {
-  console.log('Редактирование задачи с ID:', taskId)
-})
+const loadTasks = inject('loadTasks', () => {})
+const tasks = inject('tasks', [])
+
+const currentTask = tasks.value.find((task) => task.id === taskId)
+
+const handleTaskSaved = async () => {
+  try {
+    await loadTasks()
+    router.push({ name: 'home' })
+  } catch (error) {
+    console.error('Ошибка при сохранении задачи:', error)
+  }
+}
+
+const handleTaskDeleted = async () => {
+  try {
+    await deleteTask(taskId)
+
+    await loadTasks()
+    router.push({ name: 'home' })
+  } catch (error) {
+    console.error('Ошибка при удалении задачи:', error)
+  }
+}
+
+const handleCancelEdit = () => {
+  router.push({ name: 'home' })
+}
 </script>

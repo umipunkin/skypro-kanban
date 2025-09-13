@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, defineProps } from 'vue'
+import { computed, defineProps } from 'vue'
 import KanbanColumn from '@/components/KanbanColumn.vue'
 
 const props = defineProps(['tasks', 'isLoading'])

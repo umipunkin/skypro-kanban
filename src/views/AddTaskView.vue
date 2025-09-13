@@ -144,4 +144,9 @@
 
 <script setup>
 import AppHeader from '@/components/AppHeader.vue'
+import { inject } from 'vue'
+
+const loadTasks = inject('loadTasks')
+
+loadTasks()
 </script>

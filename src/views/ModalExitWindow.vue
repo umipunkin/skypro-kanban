@@ -21,14 +21,16 @@
 </template>
 
 <script setup>
-import { logout } from '@/utils/auth';
-import { useRouter } from 'vue-router';
+import { logout } from '@/utils/auth'
+import { useRouter } from 'vue-router'
+import { inject } from 'vue'
 
-
-const router = useRouter();
+const router = useRouter()
+const loadTasks = inject('loadTasks', () => {})
 
 const handleLogout = () => {
   logout()
+  loadTasks()
   router.push('/signin')
 }
 </script>

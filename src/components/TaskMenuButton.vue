@@ -8,8 +8,7 @@
   </a>
 </template>
 
-<script setup>
-</script>
+<script setup></script>
 
 <style scoped>
 .card__btn {
@@ -31,12 +30,11 @@
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background-color: #94A6BE;
+  background-color: #94a6be;
   transition: background-color 0.2s ease;
 }
 
-
 .card__btn:hover div {
-  background-color: #565EEF;
+  background-color: #565eef;
 }
 </style>

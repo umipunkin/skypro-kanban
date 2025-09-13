@@ -1,12 +1,12 @@
 <script setup>
-import CategoryTag from '@/components/CategoryTag.vue';
-import TaskMenuButton from '@/components/TaskMenuButton.vue';
-import TaskDate from '@/components/TaskDate.vue';
-import { useRouter } from 'vue-router';
+import CategoryTag from '@/components/CategoryTag.vue'
+import TaskMenuButton from '@/components/TaskMenuButton.vue'
+import TaskDate from '@/components/TaskDate.vue'
+import { useRouter } from 'vue-router'
 
 const props = defineProps({
   task: Object,
-});
+})
 
 const router = useRouter()
 
@@ -22,8 +22,8 @@ const onCardClick = () => router.push(`/tasks/${props.task.id}/edit`)
       </div>
       <div class="card__content">
         <router-link class="card__link" is="a" to="/">
-            <h3 class="card__title">{{ task.title }}</h3>
-          </router-link>
+          <h3 class="card__title">{{ task.title }}</h3>
+        </router-link>
         <TaskDate :date="task.date" />
       </div>
     </div>
@@ -31,7 +31,6 @@ const onCardClick = () => router.push(`/tasks/${props.task.id}/edit`)
 </template>
 
 <style scoped>
-
 .cards__item {
   padding: 5px;
   animation-name: card-animation;
@@ -43,7 +42,7 @@ const onCardClick = () => router.push(`/tasks/${props.task.id}/edit`)
 .cards__card {
   width: 100%;
   min-height: 130px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -54,7 +53,6 @@ const onCardClick = () => router.push(`/tasks/${props.task.id}/edit`)
   justify-content: stretch;
   padding: 15px 13px 19px;
 }
-
 
 .cards__card:hover {
   transform: translateY(-2px);
@@ -90,7 +88,6 @@ const onCardClick = () => router.push(`/tasks/${props.task.id}/edit`)
   justify-content: space-between;
 }
 
-
 .card__title {
   font-size: 14px;
   font-weight: 500;
@@ -105,7 +102,13 @@ const onCardClick = () => router.push(`/tasks/${props.task.id}/edit`)
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

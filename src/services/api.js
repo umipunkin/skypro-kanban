@@ -4,8 +4,7 @@ import axios from 'axios'
 const user = getUser()
 
 const API_URL = 'https://wedev-api.sky.pro/api'
-let authHeader = user ? `Bearer ${user.token}` : "" 
-
+let authHeader = user ? `Bearer ${user.token}` : ''
 
 export async function fetchTasks() {
   try {
@@ -50,38 +49,49 @@ export async function editTask(id, task) {
 }
 
 export async function signIn(userData) {
-    try {
-       const data = await axios.post(`${API_URL}/user/login`, userData, {
-          headers: {
-             "Content-Type": "",
-          },
-       });
-       authHeader = `Bearer ${data.data?.user?.token}`
-        return data.data.user;
- 
-    } catch (error) {
-       throw new Error(error.response.data.error);
-    }
- }
- 
- export async function signUp({ name, login, password }) {
-    try {
-       const data = await axios.post(
-        `${API_URL}/user`,
-          { login, name, password },
-          {
-          headers: {
-             "Content-Type": "",
-          },
-       }
-    );
-    return data.data.user;
-    } catch (error) {
-       console.log(error);
-       throw new Error(error.response.data.error);
-    }
- }
+  try {
+    const data = await axios.post(`${API_URL}/user/login`, userData, {
+      headers: {
+        'Content-Type': '',
+      },
+    })
+    authHeader = `Bearer ${data.data?.user?.token}`
+    return data.data.user
+  } catch (error) {
+    throw new Error(error.response.data.error)
+  }
+}
 
- export function logout () {
-    authHeader = ""
- }
+export async function signUp({ name, login, password }) {
+  try {
+    const data = await axios.post(
+      `${API_URL}/user`,
+      { login, name, password },
+      {
+        headers: {
+          'Content-Type': '',
+        },
+      },
+    )
+    return data.data.user
+  } catch (error) {
+    throw new Error(error.response.data.error)
+  }
+}
+
+export async function deleteTask(id) {
+  try {
+    const response = await axios.delete(`${API_URL}/kanban/${id}`, {
+      headers: {
+        Authorization: authHeader,
+      },
+    })
+    return response.data
+  } catch (error) {
+    throw new Error(error.response?.data?.error || error.message)
+  }
+}
+
+export function logout() {
+  authHeader = ''
+}

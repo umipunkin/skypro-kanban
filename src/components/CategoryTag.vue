@@ -1,19 +1,15 @@
 <script setup>
-
 const colorDict = {
   'Web Design': '_orange',
-  'Research': '_green',
-  'Copywriting': '_purple'
-  
+  Research: '_green',
+  Copywriting: '_purple',
 }
 defineProps({
   category: {
     type: String,
-    default: 'Web Design'
-  }
+    default: 'Web Design',
+  },
 })
-
-
 </script>
 
 <template>
@@ -22,6 +18,4 @@ defineProps({
   </div>
 </template>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
