@@ -20,11 +20,12 @@ export async function fetchTasks() {
   }
 }
 
-export async function postTask(task) {
+export async function createTask(task) {
   try {
-    const data = await axios.post(API_URL, task, {
+    const data = await axios.post(`${API_URL}/kanban`, task, {
       headers: {
         Authorization: authHeader,
+        'Content-Type': '',
       },
     })
 
@@ -36,7 +37,7 @@ export async function postTask(task) {
 
 export async function editTask(id, task) {
   try {
-    const data = await axios.put(`${API_URL}/${id}`, task, {
+    const data = await axios.put(`${API_URL}/${id}`, JSON.stringify(task), {
       headers: {
         Authorization: authHeader,
       },
