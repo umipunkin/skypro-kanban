@@ -7,22 +7,31 @@ const user = ref(getUser())
 const tasks = ref([])
 const isLoading = ref(false)
 const error = ref('')
+const tasksPromise = ref(null)
 
 provide('user', user)
 provide('tasks', tasks)
 provide('isLoading', isLoading)
 provide('error', error)
+provide('tasksPromise', tasksPromise)
 
 const loadTasks = async () => {
-  if (!isLoggedIn()) return
+  if (!isLoggedIn()) {
+    tasks.value = []
+    return Promise.resolve([])
+  }
 
   try {
     isLoading.value = true
-    const data = await fetchTasks()
-    tasks.value = data
+    tasksPromise.value = fetchTasks()
+    const data = await tasksPromise.value
+    tasks.value = Array.isArray(data) ? data : []
+    return data
   } catch (err) {
     error.value = err.message
     console.error('Ошибка при получении задач:', error.value)
+    tasks.value = []
+    throw err
   } finally {
     isLoading.value = false
   }

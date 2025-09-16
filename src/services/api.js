@@ -37,15 +37,16 @@ export async function createTask(task) {
 
 export async function editTask(id, task) {
   try {
-    const data = await axios.put(`${API_URL}/${id}`, JSON.stringify(task), {
+    const response = await axios.put(`${API_URL}/kanban/${id}`, task, {
       headers: {
         Authorization: authHeader,
+        'Content-Type': '',
       },
     })
-
-    return data.data.tasks
+    return response.data
   } catch (error) {
-    throw new Error(error.message)
+    console.error('API Edit - Error:', error.response?.data || error.message)
+    throw new Error(error.response?.data?.error || error.message)
   }
 }
 
@@ -89,10 +90,7 @@ export async function deleteTask(id) {
     })
     return response.data
   } catch (error) {
+    console.error('API Delete - Error:', error.response?.data || error.message)
     throw new Error(error.response?.data?.error || error.message)
   }
-}
-
-export function logout() {
-  authHeader = ''
 }

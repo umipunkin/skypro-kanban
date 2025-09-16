@@ -1,11 +1,9 @@
 <template>
-  <a href="#popBrowse" target="_self">
-    <div class="card__btn">
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-  </a>
+  <div class="card__btn">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
 </template>
 
 <script setup></script>

@@ -32,14 +32,12 @@
               </div>
             </form>
 
-            <!-- Календарь -->
             <AppCalendar
               class="pop-new-card__calendar"
               @change-date="($event) => (formData.date = $event)"
             />
           </div>
 
-          <!-- Категории -->
           <div class="pop-new-card__categories categories">
             <p class="categories__p subttl">Категория</p>
             <div class="categories__themes">
@@ -71,12 +69,8 @@ import { ref } from 'vue'
 import { createTask } from '@/services/api'
 import router from '@/router'
 
-
-// Данные задачи
-
 const selectedCategory = ref(1)
 
-// Категории
 const categories = ref([
   { id: 1, name: 'Web Design', color: 'orange' },
   { id: 2, name: 'Research', color: 'green' },
@@ -90,7 +84,6 @@ const formData = ref({
   description: '',
   date: new Date(),
 })
-// Календарь
 
 const selectCategory = (category) => {
   selectedCategory.value = category.id
@@ -132,8 +125,4 @@ const addTask = () => {
 .categories__theme:hover {
   transform: scale(1.05);
 }
-
-/* ._active-category {
-  border: 2px solid #000 !important;
-} */
 </style>
