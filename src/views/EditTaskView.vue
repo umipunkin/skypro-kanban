@@ -1,3 +1,4 @@
+
 <template>
   <div class="wrapper">
     <AppHeader />
@@ -8,7 +9,7 @@
             <div v-if="isLoading" class="loading-message">
               <p>Загрузка данных...</p>
             </div>
-
+            
             <div v-else-if="!currentTask" class="error-message">
               <p>Задача не найдена</p>
               <button @click="handleCancel" class="_btn-bg _hover01">Вернуться на главную</button>
@@ -17,10 +18,7 @@
             <div v-else>
               <div class="pop-browse__top-block">
                 <h3 class="pop-browse__ttl">Редактирование задачи</h3>
-                <div
-                  class="categories__theme theme-top"
-                  :class="`_${getCategoryColor(formData.topic)}`"
-                >
+                <div class="categories__theme theme-top" :class="`_${getCategoryColor(formData.topic)}`">
                   <p :class="`_${getCategoryColor(formData.topic)}`">{{ formData.topic }}</p>
                 </div>
               </div>
@@ -28,13 +26,17 @@
               <div class="pop-browse__status status">
                 <p class="status__p subttl">Статус</p>
                 <div class="status__themes">
-                  <div
-                    v-for="status in statuses"
+                  <div 
+                    v-for="status in statuses" 
                     :key="status.id"
-                    :class="['status__theme', { '_active-status': formData.status === status.id }]"
+                    :class="[
+                      'status__theme',
+                      `_${getStatusColor(status.id)}`,
+                      { '_active-status': formData.status === status.id }
+                    ]"
                     @click="formData.status = status.id"
                   >
-                    <p>{{ status.title }}</p>
+                    <p :class="`_${getStatusColor(status.id)}`">{{ status.title }}</p>
                   </div>
                 </div>
               </div>
@@ -72,7 +74,7 @@
                 />
               </div>
 
-              <div class="theme-down__categories theme-down">
+              <div class="pop-browse__categories categories">
                 <p class="categories__p subttl">Категория</p>
                 <div class="categories__themes">
                   <div
@@ -81,7 +83,7 @@
                     :class="[
                       'categories__theme',
                       `_${category.color}`,
-                      { '_active-category': formData.topic === category.name },
+                      { '_active-category': formData.topic === category.name }
                     ]"
                     @click="formData.topic = category.name"
                   >
@@ -98,7 +100,10 @@
                   <button class="btn-edit__edit _btn-bor _hover03" @click="handleCancel">
                     Отменить
                   </button>
-                  <button class="btn-edit__delete _btn-bor _hover03" @click="handleDelete">
+                  <button
+                    class="btn-edit__delete _btn-bor _hover03"
+                    @click="handleDelete"
+                  >
                     Удалить задачу
                   </button>
                 </div>
@@ -159,11 +164,12 @@ onMounted(async () => {
     } else {
       await loadTasks()
     }
-
-    const task = tasks.value.find(
-      (task) => task.id === route.params.id || task._id === route.params.id,
+    
+    const task = tasks.value.find(task => 
+      task.id === route.params.id || 
+      task._id === route.params.id
     )
-
+    
     if (task) {
       taskId.value = task._id || task.id
       formData.value = {
@@ -182,12 +188,26 @@ onMounted(async () => {
 })
 
 const currentTask = computed(() => {
-  return tasks.value.find((task) => task.id === taskId.value || task._id === taskId.value)
+  return tasks.value.find(task => 
+    task.id === taskId.value || 
+    task._id === taskId.value
+  )
 })
 
 const getCategoryColor = (topic) => {
-  const category = categories.value.find((cat) => cat.name === topic)
+  const category = categories.value.find(cat => cat.name === topic)
   return category ? category.color : 'orange'
+}
+
+const getStatusColor = (statusId) => {
+  const statusColors = {
+    'Без статуса': 'gray',
+    'Нужно сделать': 'gray',
+    'В работе': 'blue',
+    'Тестирование': 'yellow',
+    'Готово': 'green'
+  }
+  return statusColors[statusId] || 'gray'
 }
 
 const handleSave = async () => {
@@ -248,11 +268,169 @@ const handleCancel = () => {
 .loading-message,
 .error-message {
   text-align: center;
-  padding: 40px;
+  padding: 20px;
   color: #94a6be;
+  font-size: 14px;
 }
 
 .error-message button {
-  margin-top: 20px;
+  margin-top: 10px;
+  padding: 8px 16px;
+}
+
+.status__p {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.status__themes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.status__theme {
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 24px;
+  font-size: 12px;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.status__theme._active-status {
+  border-color: currentColor;
+}
+
+.status__theme:hover {
+  transform: translateY(-1px);
+}
+
+.categories__p {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.categories__themes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.categories__theme {
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.categories__theme._active-category {
+  border-color: currentColor;
+  color: #94A6BE;
+}
+
+.categories__theme:hover {
+  transform: translateY(-1px);
+}
+
+._gray {
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
+
+._blue {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+._yellow {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+._green {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+._orange {
+  background-color: #ffedd5;
+  color: #ea580c;
+}
+
+._green {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+._purple {
+  background-color: #f3e8ff;
+  color: #7e22ce;
+}
+
+.form-browse__input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d4dbe5;
+  border-radius: 6px;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.form-browse__input:focus {
+  border-color: #565eef;
+  outline: none;
+}
+
+.form-browse__area {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d4dbe5;
+  border-radius: 6px;
+  font-size: 13px;
+  min-height: 80px;
+  resize: vertical;
+}
+
+.form-browse__area:focus {
+  border-color: #565eef;
+  outline: none;
+}
+
+.pop-browse__categories,
+.pop-browse__status {
+  margin: 15px 0;
+}
+
+.btn-group {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+button {
+  padding: 8px 16px;
+  font-size: 13px;
+}
+
+._btn-bg {
+  background: #565eef;
+  color: white;
+}
+
+._btn-bor {
+  border: 1px solid #565eef;
+  color: #565eef;
+  background: transparent;
+}
+
+._hover01:hover {
+  background: #454ce0;
+}
+
+._hover03:hover {
+  background: #f0f2f5;
 }
 </style>
