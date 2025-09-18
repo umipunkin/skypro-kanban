@@ -459,7 +459,7 @@ body {
 }
 
 .calendar__p span {
-  color: #000000;
+  color: #94A6BE;
 }
 
 .calendar__block {
@@ -813,6 +813,7 @@ body {
 .main__content {
   width: 100%;
   display: flex;
+  justify-content: space-between;
 }
 
 .main__column {
@@ -1052,3 +1053,4 @@ body {
     display: block;
   }
 }
+

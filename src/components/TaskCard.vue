@@ -10,7 +10,10 @@ const props = defineProps({
 
 const router = useRouter()
 
-const onCardClick = () => router.push(`/tasks/${props.task.id}/edit`)
+const onCardClick = () => {
+  const taskId = props.task._id || props.task.id
+  router.push(`/tasks/${taskId}`)
+}
 </script>
 
 <template>
@@ -18,8 +21,11 @@ const onCardClick = () => router.push(`/tasks/${props.task.id}/edit`)
     <div class="cards__card card">
       <div class="card__group">
         <CategoryTag :category="task.topic" />
-        <TaskMenuButton />
+        <router-link :to="`/tasks/${task.id}`" class="card__menu-link">
+          <TaskMenuButton />
+        </router-link>
       </div>
+
       <div class="card__content">
         <router-link class="card__link" is="a" to="/">
           <h3 class="card__title">{{ task.title }}</h3>

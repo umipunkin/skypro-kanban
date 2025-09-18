@@ -107,7 +107,6 @@ const handleSubmit = async () => {
       login: email.value,
       password: password.value,
     }
-    // login(mockToken, userData)
 
     const res = await signUp(userData)
 

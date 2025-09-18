@@ -1,3 +1,4 @@
+
 <template>
   <div class="wrapper">
     <AppHeader />
@@ -5,176 +6,111 @@
       <div class="pop-browse__container">
         <div class="pop-browse__block">
           <div class="pop-browse__content">
-            <div class="pop-browse__top-block">
-              <h3 class="pop-browse__ttl">Редактирование задачи #{{ taskId }}</h3>
-              <div class="categories__theme theme-top _orange _active-category">
-                <p class="_orange">{{ currentTask?.topic || 'Web Design' }}</p>
-              </div>
+            <div v-if="isLoading" class="loading-message">
+              <p>Загрузка данных...</p>
             </div>
-            <div class="pop-browse__status status">
-              <p class="status__p subttl">Статус</p>
-              <div class="status__themes">
-                <div class="status__theme _hide">
-                  <p>Без статуса</p>
-                </div>
-                <div class="status__theme _gray">
-                  <p class="_gray">Нужно сделать</p>
-                </div>
-                <div class="status__theme _hide">
-                  <p>В работе</p>
-                </div>
-                <div class="status__theme _hide">
-                  <p>Тестирование</p>
-                </div>
-                <div class="status__theme _hide">
-                  <p>Готово</p>
-                </div>
-              </div>
+            
+            <div v-else-if="!currentTask" class="error-message">
+              <p>Задача не найдена</p>
+              <button @click="handleCancel" class="_btn-bg _hover01">Вернуться на главную</button>
             </div>
-            <div class="pop-browse__wrap">
-              <form class="pop-browse__form form-browse" id="formBrowseCard" action="#">
-                <div class="form-browse__block">
-                  <label for="textArea01" class="subttl">Описание задачи</label>
-                  <textarea
-                    class="form-browse__area"
-                    name="text"
-                    id="textArea01"
-                    readonly
-                    placeholder="Введите описание задачи..."
-                  ></textarea>
-                </div>
-              </form>
-              <div class="pop-new-card__calendar calendar">
-                <p class="calendar__ttl subttl">Даты</p>
-                <div class="calendar__block">
-                  <div class="calendar__nav">
-                    <div class="calendar__month">Сентябрь 2023</div>
-                    <div class="nav__actions">
-                      <div class="nav__action" data-action="prev">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="6"
-                          height="11"
-                          viewBox="0 0 6 11"
-                        >
-                          <path
-                            d="M5.72945 1.95273C6.09018 1.62041 6.09018 1.0833 5.72945 0.750969C5.36622 0.416344 4.7754 0.416344 4.41218 0.750969L0.528487 4.32883C-0.176162 4.97799 -0.176162 6.02201 0.528487 6.67117L4.41217 10.249C4.7754 10.5837 5.36622 10.5837 5.72945 10.249C6.09018 9.9167 6.09018 9.37959 5.72945 9.04727L1.87897 5.5L5.72945 1.95273Z"
-                          />
-                        </svg>
-                      </div>
-                      <div class="nav__action" data-action="next">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="6"
-                          height="11"
-                          viewBox="0 0 6 11"
-                        >
-                          <path
-                            d="M0.27055 9.04727C-0.0901833 9.37959 -0.0901832 9.9167 0.27055 10.249C0.633779 10.5837 1.2246 10.5837 1.58783 10.249L5.47151 6.67117C6.17616 6.02201 6.17616 4.97799 5.47151 4.32883L1.58782 0.75097C1.2246 0.416344 0.633778 0.416344 0.270549 0.75097C-0.0901831 1.0833 -0.090184 1.62041 0.270549 1.95273L4.12103 5.5L0.27055 9.04727Z"
-                          />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="calendar__content">
-                    <div class="calendar__days-names">
-                      <div class="calendar__day-name">пн</div>
-                      <div class="calendar__day-name">вт</div>
-                      <div class="calendar__day-name">ср</div>
-                      <div class="calendar__day-name">чт</div>
-                      <div class="calendar__day-name">пт</div>
-                      <div class="calendar__day-name -weekend-">сб</div>
-                      <div class="calendar__day-name -weekend-">вс</div>
-                    </div>
-                    <div class="calendar__cells">
-                      <div class="calendar__cell _other-month">28</div>
-                      <div class="calendar__cell _other-month">29</div>
-                      <div class="calendar__cell _other-month">30</div>
-                      <div class="calendar__cell _cell-day">31</div>
-                      <div class="calendar__cell _cell-day">1</div>
-                      <div class="calendar__cell _cell-day _weekend">2</div>
-                      <div class="calendar__cell _cell-day _weekend">3</div>
-                      <div class="calendar__cell _cell-day">4</div>
-                      <div class="calendar__cell _cell-day">5</div>
-                      <div class="calendar__cell _cell-day">6</div>
-                      <div class="calendar__cell _cell-day">7</div>
-                      <div class="calendar__cell _cell-day _current">8</div>
-                      <div class="calendar__cell _cell-day _weekend _active-day">9</div>
-                      <div class="calendar__cell _cell-day _weekend">10</div>
-                      <div class="calendar__cell _cell-day">11</div>
-                      <div class="calendar__cell _cell-day">12</div>
-                      <div class="calendar__cell _cell-day">13</div>
-                      <div class="calendar__cell _cell-day">14</div>
-                      <div class="calendar__cell _cell-day">15</div>
-                      <div class="calendar__cell _cell-day _weekend">16</div>
-                      <div class="calendar__cell _cell-day _weekend">17</div>
-                      <div class="calendar__cell _cell-day">18</div>
-                      <div class="calendar__cell _cell-day">19</div>
-                      <div class="calendar__cell _cell-day">20</div>
-                      <div class="calendar__cell _cell-day">21</div>
-                      <div class="calendar__cell _cell-day">22</div>
-                      <div class="calendar__cell _cell-day _weekend">23</div>
-                      <div class="calendar__cell _cell-day _weekend">24</div>
-                      <div class="calendar__cell _cell-day">25</div>
-                      <div class="calendar__cell _cell-day">26</div>
-                      <div class="calendar__cell _cell-day">27</div>
-                      <div class="calendar__cell _cell-day">28</div>
-                      <div class="calendar__cell _cell-day">29</div>
-                      <div class="calendar__cell _cell-day _weekend">30</div>
-                      <div class="calendar__cell _other-month _weekend">1</div>
-                    </div>
-                  </div>
 
-                  <input type="hidden" id="datepick_value" value="08.09.2023" />
-                  <div class="calendar__period">
-                    <p class="calendar__p date-end">
-                      Срок исполнения: <span class="date-control">09.09.23</span>
-                    </p>
+            <div v-else>
+              <div class="pop-browse__top-block">
+                <h3 class="pop-browse__ttl">Редактирование задачи</h3>
+                <div class="categories__theme theme-top" :class="`_${getCategoryColor(formData.topic)}`">
+                  <p :class="`_${getCategoryColor(formData.topic)}`">{{ formData.topic }}</p>
+                </div>
+              </div>
+
+              <div class="pop-browse__status status">
+                <p class="status__p subttl">Статус</p>
+                <div class="status__themes">
+                  <div 
+                    v-for="status in statuses" 
+                    :key="status.id"
+                    :class="[
+                      'status__theme',
+                      `_${getStatusColor(status.id)}`,
+                      { '_active-status': formData.status === status.id }
+                    ]"
+                    @click="formData.status = status.id"
+                  >
+                    <p :class="`_${getStatusColor(status.id)}`">{{ status.title }}</p>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="theme-down__categories theme-down">
-              <p class="categories__p subttl">Категория</p>
-              <div class="categories__theme _orange _active-category">
-                <p class="_orange">Web Design</p>
+
+              <div class="pop-browse__wrap">
+                <form class="pop-browse__form form-browse" id="formBrowseCard">
+                  <div class="form-browse__block">
+                    <label for="formTitle" class="subttl">Название задачи</label>
+                    <input
+                      v-model="formData.title"
+                      class="form-browse__input"
+                      type="text"
+                      id="formTitle"
+                      placeholder="Введите название задачи..."
+                      required
+                    />
+                  </div>
+                  <div class="form-browse__block">
+                    <label for="textArea01" class="subttl">Описание задачи</label>
+                    <textarea
+                      v-model="formData.description"
+                      class="form-browse__area"
+                      name="text"
+                      id="textArea01"
+                      placeholder="Введите описание задачи..."
+                      required
+                    ></textarea>
+                  </div>
+                </form>
+
+                <AppCalendar
+                  class="pop-new-card__calendar"
+                  :initial-date="formData.date"
+                  @change-date="formData.date = $event"
+                />
               </div>
-            </div>
-            <div class="pop-browse__btn-browse">
-              <div class="btn-group">
-                <button class="btn-browse__edit _btn-bor _hover03">
-                  <a href="#">Редактировать задачу</a>
-                </button>
-                <button class="btn-browse__delete _btn-bor _hover03">
-                  <a href="#">Удалить задачу</a>
+
+              <div class="pop-browse__categories categories">
+                <p class="categories__p subttl">Категория</p>
+                <div class="categories__themes">
+                  <div
+                    v-for="category in categories"
+                    :key="category.id"
+                    :class="[
+                      'categories__theme',
+                      `_${category.color}`,
+                      { '_active-category': formData.topic === category.name }
+                    ]"
+                    @click="formData.topic = category.name"
+                  >
+                    <p :class="`_${category.color}`">{{ category.name }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pop-browse__btn-edit">
+                <div class="btn-group">
+                  <button class="btn-edit__edit _btn-bg _hover01" @click="handleSave">
+                    Сохранить
+                  </button>
+                  <button class="btn-edit__edit _btn-bor _hover03" @click="handleCancel">
+                    Отменить
+                  </button>
+                  <button
+                    class="btn-edit__delete _btn-bor _hover03"
+                    @click="handleDelete"
+                  >
+                    Удалить задачу
+                  </button>
+                </div>
+                <button class="btn-edit__close _btn-bg _hover01" @click="handleCancel">
+                  Закрыть
                 </button>
               </div>
-              <button
-                class="btn-edit__close _btn-bg _hover01"
-                @click="$router.push({ name: 'home' })"
-              >
-                Закрыть
-              </button>
-            </div>
-            <div class="pop-browse__btn-edit _hide">
-              <div class="btn-group">
-                <button class="btn-edit__edit _btn-bg _hover01" @click="handleTaskSaved">
-                  Сохранить
-                </button>
-                <button class="btn-edit__edit _btn-bor _hover03" @click="handleCancelEdit">
-                  Отменить
-                </button>
-                <button
-                  class="btn-edit__delete _btn-bor _hover03"
-                  id="btnDelete"
-                  @click="handleTaskDeleted"
-                >
-                  Удалить задачу
-                </button>
-              </div>
-              <button class="btn-edit__close _btn-bg _hover01" @click="handleCancelEdit">
-                Закрыть
-              </button>
             </div>
           </div>
         </div>
@@ -184,41 +120,317 @@
 </template>
 
 <script setup>
+import { ref, onMounted, computed, inject } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import AppHeader from '@/components/AppHeader.vue'
-import { inject } from 'vue'
-import { deleteTask } from '@/services/api'
+import AppCalendar from '@/components/AppCalendar.vue'
+import { editTask, deleteTask } from '@/services/api'
 
 const route = useRoute()
 const router = useRouter()
-const taskId = route.params.id
+const taskId = ref(null)
+const isLoading = ref(true)
 
-const loadTasks = inject('loadTasks', () => {})
 const tasks = inject('tasks', [])
+const loadTasks = inject('loadTasks', () => {})
+const tasksPromise = inject('tasksPromise', null)
 
-const currentTask = tasks.value.find((task) => task.id === taskId)
+const categories = ref([
+  { id: 1, name: 'Web Design', color: 'orange' },
+  { id: 2, name: 'Research', color: 'green' },
+  { id: 3, name: 'Copywriting', color: 'purple' },
+])
 
-const handleTaskSaved = async () => {
+const statuses = ref([
+  { id: 'Без статуса', title: 'Без статуса' },
+  { id: 'Нужно сделать', title: 'Нужно сделать' },
+  { id: 'В работе', title: 'В работе' },
+  { id: 'Тестирование', title: 'Тестирование' },
+  { id: 'Готово', title: 'Готово' },
+])
+
+const formData = ref({
+  title: '',
+  topic: 'Web Design',
+  status: 'Без статуса',
+  description: '',
+  date: new Date(),
+})
+
+onMounted(async () => {
   try {
+    if (tasksPromise.value) {
+      await tasksPromise.value
+    } else {
+      await loadTasks()
+    }
+    
+    const task = tasks.value.find(task => 
+      task.id === route.params.id || 
+      task._id === route.params.id
+    )
+    
+    if (task) {
+      taskId.value = task._id || task.id
+      formData.value = {
+        title: task.title || '',
+        topic: task.topic || 'Web Design',
+        status: task.status || 'Без статуса',
+        description: task.description || '',
+        date: task.date ? new Date(task.date) : new Date(),
+      }
+    }
+  } catch (error) {
+    console.error('Error loading tasks:', error)
+  } finally {
+    isLoading.value = false
+  }
+})
+
+const currentTask = computed(() => {
+  return tasks.value.find(task => 
+    task.id === taskId.value || 
+    task._id === taskId.value
+  )
+})
+
+const getCategoryColor = (topic) => {
+  const category = categories.value.find(cat => cat.name === topic)
+  return category ? category.color : 'orange'
+}
+
+const getStatusColor = (statusId) => {
+  const statusColors = {
+    'Без статуса': 'gray',
+    'Нужно сделать': 'gray',
+    'В работе': 'blue',
+    'Тестирование': 'yellow',
+    'Готово': 'green'
+  }
+  return statusColors[statusId] || 'gray'
+}
+
+const handleSave = async () => {
+  if (!formData.value.title.trim()) {
+    alert('Введите название задачи')
+    return
+  }
+
+  if (!taskId.value) {
+    alert('ID задачи не найден')
+    return
+  }
+
+  try {
+    const taskData = {
+      title: formData.value.title,
+      topic: formData.value.topic,
+      status: formData.value.status,
+      description: formData.value.description,
+      date: formData.value.date.toISOString(),
+    }
+
+    await editTask(taskId.value, taskData)
     await loadTasks()
     router.push({ name: 'home' })
   } catch (error) {
     console.error('Ошибка при сохранении задачи:', error)
+    alert('Не удалось сохранить задачу: ' + error.message)
   }
 }
 
-const handleTaskDeleted = async () => {
-  try {
-    await deleteTask(taskId)
+const handleDelete = async () => {
+  if (!taskId.value) {
+    alert('ID задачи не найден')
+    return
+  }
 
+  if (!confirm('Вы уверены, что хотите удалить эту задачу?')) {
+    return
+  }
+
+  try {
+    await deleteTask(taskId.value)
     await loadTasks()
     router.push({ name: 'home' })
   } catch (error) {
     console.error('Ошибка при удалении задачи:', error)
+    alert('Не удалось удалить задачу: ' + error.message)
   }
 }
 
-const handleCancelEdit = () => {
+const handleCancel = () => {
   router.push({ name: 'home' })
 }
 </script>
+
+<style scoped>
+.loading-message,
+.error-message {
+  text-align: center;
+  padding: 20px;
+  color: #94a6be;
+  font-size: 14px;
+}
+
+.error-message button {
+  margin-top: 10px;
+  padding: 8px 16px;
+}
+
+.status__p {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.status__themes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.status__theme {
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 24px;
+  font-size: 12px;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.status__theme._active-status {
+  border-color: currentColor;
+}
+
+.status__theme:hover {
+  transform: translateY(-1px);
+}
+
+.categories__p {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.categories__themes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.categories__theme {
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.categories__theme._active-category {
+  border-color: currentColor;
+  color: #94A6BE;
+}
+
+.categories__theme:hover {
+  transform: translateY(-1px);
+}
+
+._gray {
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
+
+._blue {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+._yellow {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+._green {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+._orange {
+  background-color: #ffedd5;
+  color: #ea580c;
+}
+
+._green {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+._purple {
+  background-color: #f3e8ff;
+  color: #7e22ce;
+}
+
+.form-browse__input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d4dbe5;
+  border-radius: 6px;
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.form-browse__input:focus {
+  border-color: #565eef;
+  outline: none;
+}
+
+.form-browse__area {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d4dbe5;
+  border-radius: 6px;
+  font-size: 13px;
+  min-height: 80px;
+  resize: vertical;
+}
+
+.form-browse__area:focus {
+  border-color: #565eef;
+  outline: none;
+}
+
+.pop-browse__categories,
+.pop-browse__status {
+  margin: 15px 0;
+}
+
+.btn-group {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+button {
+  padding: 8px 16px;
+  font-size: 13px;
+}
+
+._btn-bg {
+  background: #565eef;
+  color: white;
+}
+
+._btn-bor {
+  border: 1px solid #565eef;
+  color: #565eef;
+  background: transparent;
+}
+
+._hover01:hover {
+  background: #454ce0;
+}
+
+._hover03:hover {
+  background: #f0f2f5;
+}
+</style>
